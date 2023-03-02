@@ -9,6 +9,6 @@ return [
         'access_secret' => 'Access Secret',
         'associate_tag' => 'Associate Tag',
         'available_countries' => ' Available countries are au,br,ca,cn,fr,de,in,it,jp,mx,es,uk,com',
-        'region' => 'Region'
-    ]
+        'region' => 'Region',
+    ],
 ];

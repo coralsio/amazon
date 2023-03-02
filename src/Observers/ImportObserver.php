@@ -6,7 +6,6 @@ use Corals\Modules\Amazon\Models\Import;
 
 class ImportObserver
 {
-
     /**
      * @param Import $import
      */

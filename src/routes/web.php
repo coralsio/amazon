@@ -6,6 +6,4 @@ Route::group(['prefix' => 'amazon'], function () {
 
     Route::get('settings', 'AmazonController@settings');
     Route::post('settings/{store?}', 'AmazonController@saveSettings');
-
 });
-

@@ -26,10 +26,8 @@ class AmazonCategory extends BaseModel
         return $this->hasMany(Import::class, 'amazon_category_import');
     }
 
-
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
     }
-
 }

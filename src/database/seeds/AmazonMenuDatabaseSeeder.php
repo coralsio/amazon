@@ -22,11 +22,12 @@ class AmazonMenuDatabaseSeeder extends Seeder
             'description' => 'Amazon Menu Item',
             'icon' => 'fa fa-amazon',
             'target' => null, 'roles' => '["1","2"]',
-            'order' => 0
+            'order' => 0,
         ]);
 
         // seed subscriptions children menu
-        \DB::table('menus')->insert([
+        \DB::table('menus')->insert(
+            [
                 [
                     'parent_id' => $amazon_menu_id,
                     'key' => null,
@@ -36,12 +37,13 @@ class AmazonMenuDatabaseSeeder extends Seeder
                     'description' => 'Imports List Menu Item',
                     'icon' => 'fa fa-upload',
                     'target' => null, 'roles' => '["1"]',
-                    'order' => 0
+                    'order' => 0,
                 ],
             ]
         );
         // seed users children menu
-        \DB::table('menus')->insert([
+        \DB::table('menus')->insert(
+            [
                 [
                     'parent_id' => $amazon_menu_id,
                     'key' => null,
@@ -52,7 +54,7 @@ class AmazonMenuDatabaseSeeder extends Seeder
                     'icon' => 'fa fa-cog fa-fw',
                     'target' => null,
                     'roles' => '["1"]',
-                    'order' => 0
+                    'order' => 0,
                 ],
             ]
         );

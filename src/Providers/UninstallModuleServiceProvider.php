@@ -9,7 +9,7 @@ use Corals\Modules\Amazon\database\seeds\AmazonDatabaseSeeder;
 class UninstallModuleServiceProvider extends BaseUninstallModuleServiceProvider
 {
     protected $migrations = [
-        AmazonTables::class
+        AmazonTables::class,
     ];
 
     protected function providerBooted()

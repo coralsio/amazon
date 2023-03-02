@@ -22,19 +22,17 @@ class AmazonController extends BaseController
         $settings = [];
         foreach ($config_setting as $key => $setting) {
             $settings['amazon_' . $key] = ['name' => trans('Amazon::labels.settings.' . $key), 'settings' => $setting];
-
         }
+
         return view('Amazon::amazon.settings')->with(compact('settings'));
     }
 
     public function saveSettings(Request $request)
     {
-
         try {
             $settings = $request->except('_token');
 
             if ($request->route('store')) {
-
                 $store = Store::findByHash($request->route('store'));
                 foreach ($settings as $key => $value) {
                     $store->updateSetting($key, $value);

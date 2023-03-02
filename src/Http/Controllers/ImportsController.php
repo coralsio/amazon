@@ -7,8 +7,6 @@ use Corals\Modules\Amazon\DataTables\ImportsDataTable;
 use Corals\Modules\Amazon\Http\Requests\ImportRequest;
 use Corals\Modules\Amazon\Models\Import;
 
-
-
 class ImportsController extends BaseController
 {
     protected $excludedRequestParams = ['categories'];
@@ -57,7 +55,7 @@ class ImportsController extends BaseController
         try {
             $data = $request->except($this->excludedRequestParams);
 
-            if (\Modules::isModuleActive('corals-marketplace')){
+            if (\Modules::isModuleActive('corals-marketplace')) {
                 $data = \Store::setStoreData($data);
             }
 
@@ -109,7 +107,7 @@ class ImportsController extends BaseController
         try {
             $data = $request->except($this->excludedRequestParams);
 
-            if (\Modules::isModuleActive('corals-marketplace')){
+            if (\Modules::isModuleActive('corals-marketplace')) {
                 $data = \Store::setStoreData($data);
             }
 
@@ -142,5 +140,4 @@ class ImportsController extends BaseController
 
         return response()->json($message);
     }
-
 }

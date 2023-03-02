@@ -14,8 +14,6 @@ class AmazonSettingsDatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('settings')->insert([
             [
                 'code' => 'amazon_api_access_key',

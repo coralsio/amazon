@@ -9,7 +9,7 @@ class Amazon
     /**
      * Amazon constructor.
      */
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -19,6 +19,5 @@ class Amazon
     public function getAmazonCategories()
     {
         return AmazonCategory::active()->pluck('name', 'id')->toArray();
-
     }
 }

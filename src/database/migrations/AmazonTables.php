@@ -23,8 +23,10 @@ class AmazonTables extends Migration
             $table->integer('max_result_pages');
             $table->unsignedInteger('store_id')->nullable();
 
-            $table->enum('status',
-                ['canceled', 'pending', 'in_progress', 'completed', 'failed'])->default('pending')->nullable();
+            $table->enum(
+                'status',
+                ['canceled', 'pending', 'in_progress', 'completed', 'failed']
+            )->default('pending')->nullable();
             $table->text('notes')->nullable();
 
             $table->text('properties')->nullable();
@@ -74,6 +76,5 @@ class AmazonTables extends Migration
         Schema::dropIfExists('amazon_import_product');
         Schema::dropIfExists('amazon_imports');
         Schema::dropIfExists('amazon_categories');
-
     }
 }

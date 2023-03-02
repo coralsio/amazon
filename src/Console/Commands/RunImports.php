@@ -1,5 +1,6 @@
-<?php namespace Corals\Modules\Amazon\Console\Commands;
+<?php
 
+namespace Corals\Modules\Amazon\Console\Commands;
 
 use Corals\Modules\Amazon\Models\Import;
 use Corals\Modules\Marketplace\Models\Store;
@@ -16,19 +17,19 @@ class RunImports extends Command
         return $this->processImports();
     }
 
-
     public function processImports()
     {
-
         $running_import = Import::where('status', 'in_progress')->first();
         if ($running_import) {
             $this->info("There is already running import process ");
+
             return false;
         }
 
         $import = Import::pending()->orderBy('created_at', 'asc')->first();
-        if (!$import) {
+        if (! $import) {
             $this->info("There is no Pending imports");
+
             return true;
         }
 
@@ -46,7 +47,6 @@ class RunImports extends Command
 
             if ($import->keywords) {
                 $keywords = implode(', ', $import->keywords);
-
             } else {
                 $keywords = "";
             }
@@ -59,18 +59,16 @@ class RunImports extends Command
                     'api_key' => $store->getSettingValue('amazon_api_access_key', ''),
                     'api_secret_key' => $store->getSettingValue('amazon_api_access_secret', ''),
                     'host' => 'webservices.amazon.' . $store->getSettingValue('amazon_api_country', 'com'),
-                    'region' => $store->getSettingValue('amazon_api_region', '')
+                    'region' => $store->getSettingValue('amazon_api_region', ''),
                 ];
                 $associate_tag = $store->getSettingValue('amazon_api_associate_tag', '');
-
-
             } else {
                 $config = [
                     'api_key' => \Settings::get('amazon_api_access_key', ''),
                     'api_secret_key' => \Settings::get('amazon_api_access_secret', ''),
                     'associate_tag' => \Settings::get('amazon_api_associate_tag', ''),
                     'host' => 'webservices.amazon.' . \Settings::get('amazon_api_country', 'com'),
-                    'region' => \Settings::get('amazon_api_region', '')
+                    'region' => \Settings::get('amazon_api_region', ''),
                 ];
                 $associate_tag = \Settings::get('amazon_api_associate_tag', '');
             }
@@ -82,18 +80,13 @@ class RunImports extends Command
 
 
             if ($import->categories->count() > 0) {
-
                 foreach ($import->categories as $import_category) {
-
                     for ($i = 1; $i <= $scan_pages; $i++) {
-
                         $response = \AmazonProduct::search($import_category->name, $keywords, $i);
                         $this->parseResponse($response, $categories, $tags, $import, $brands);
-
                     }
                 }
             } else {
-
                 for ($i = 1; $i <= $scan_pages; $i++) {
                     $response = \AmazonProduct::search('All', $keywords, $i);
                     $this->parseResponse($response, $categories, $tags, $import, $brands);
@@ -106,7 +99,7 @@ class RunImports extends Command
         } catch (\Exception $exception) {
             $errors = [];
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $error = implode("\n", $errors);
             } else {
                 $error = $exception->getMessage();
@@ -118,20 +111,17 @@ class RunImports extends Command
             //$import->status = 'failed';
             $import->save();
             log_exception($exception, Import::class, 'import');
-
         }
-
     }
 
-    function parseResponse($response, $categories, $tags, $import, $brands)
+    public function parseResponse($response, $categories, $tags, $import, $brands)
     {
-
         foreach ($response['SearchResult']['Items'] as $item) {
             $title = $item['ItemInfo']['Title']['DisplayValue'];
 
             if (isset($item['ItemInfo']['ByLineInfo']) && isset($item['ItemInfo']['ByLineInfo']['Brand'])) {
-                $brand = $item['ItemInfo']['ByLineInfo']['Brand']['DisplayValue'];;
-
+                $brand = $item['ItemInfo']['ByLineInfo']['Brand']['DisplayValue'];
+                ;
             } else {
                 $brand = "";
             }
@@ -158,7 +148,7 @@ class RunImports extends Command
                 'price' => $price,
                 'amazon_url' => $amazonUrl,
                 'image_urls' => $image_urls,
-                'brand' => $brand
+                'brand' => $brand,
             ];
             if ($import->store_id) {
                 $product['store_id'] = $import->store_id;
@@ -174,7 +164,6 @@ class RunImports extends Command
 
             if ($product['brand']) {
                 list($brand_id, $brands) = $this->createMissingBrand($product['brand'], $brands);
-
             }
 
             $import_product->name = $product['title'];
@@ -205,10 +194,8 @@ class RunImports extends Command
                     $sku_image_url = $image_url;
                 } else {
                     $import_product->addMediaFromUrl($image_url)->withCustomProperties(['root' => 'amazon_media_import'])->toMediaCollection('ecommerce-product-gallery');
-
                 }
                 $first = false;
-
             }
             if ($sku_image_url) {
                 //$import_product->copyFirstMediatoSKU($sku);
@@ -223,13 +210,12 @@ class RunImports extends Command
                 list($categories, $product_categories) = $this->createMissingCategories($categories, [array_pop($item_categories)]);
                 $import_product->categories()->sync($product_categories, []);
             }
-
-
         }
+
         return [$categories, $brands, $tags];
     }
 
-    function getItemImages($item, $image_count)
+    public function getItemImages($item, $image_count)
     {
         $imageUrls = [];
         if ($item['Images']['Primary']) {
@@ -237,7 +223,6 @@ class RunImports extends Command
             if (count($imageUrls) >= $image_count) {
                 return $imageUrls;
             }
-
         }
         if (isset($item['Images']['Variants'])) {
             foreach ($item['Images']['Variants'] as $image) {
@@ -247,15 +232,15 @@ class RunImports extends Command
                 }
             }
         }
+
         return $imageUrls;
     }
 
-
-    function createMissingCategories($categories, $item_categories)
+    public function createMissingCategories($categories, $item_categories)
     {
         $product_categories = [];
         foreach ($item_categories as $item_category) {
-            if (!array_key_exists($item_category['id'], $categories) && !in_array($item_category['name'], $categories)) {
+            if (! array_key_exists($item_category['id'], $categories) && ! in_array($item_category['name'], $categories)) {
                 $category = new \ImportCategory();
                 $category->external_id = $item_category['id'];
                 $category->name = $item_category['name'];
@@ -269,50 +254,37 @@ class RunImports extends Command
                     $product_categories[] = $categories[$item_category['id']];
                 } else {
                     $product_categories[] = array_search($item_category['name'], $categories);
-
                 }
-
             }
         }
 
         return [$categories, $product_categories];
     }
 
-
-    function createMissingBrand($brand_name, $brands)
+    public function createMissingBrand($brand_name, $brands)
     {
-
-        if (!array_key_exists($brand_name, $brands)) {
+        if (! array_key_exists($brand_name, $brands)) {
             $brand = new \ImportBrand();
             $brand->name = $brand_name;
             $brand->slug = \Str::slug($brand_name);
             $brand->save();
             $brands[$brand_name] = $brand->id;
+
             return [$brand->id, $brands];
         } else {
             return [$brands[$brand_name], $brands];
-
         }
-
-
     }
 
-
-    function getItemCategories($item)
+    public function getItemCategories($item)
     {
         $categories = [];
         if ($item['BrowseNodeInfo']) {
             foreach ($item['BrowseNodeInfo']['BrowseNodes'] as $node) {
-
                 $categories[] = ['name' => $node['Ancestor']['Ancestor']['DisplayName'], 'id' => $node['Ancestor']['Ancestor']['Id']];
-
             };
-
-
         }
 
         return $categories;
     }
-
-
 }

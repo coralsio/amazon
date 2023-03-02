@@ -16,8 +16,8 @@ return [
                 'validation' => null,
                 'value' => null,
                 'attributes' => [
-                    'help_text' => 'Amazon::labels.settings.available_countries'
-                ]
+                    'help_text' => 'Amazon::labels.settings.available_countries',
+                ],
             ],
             'access_key' => [
                 'type' => 'text',
@@ -26,8 +26,8 @@ return [
                 'validation' => '',
                 'value' => null,
                 'attributes' => [
-                    'help_text' => ''
-                ]
+                    'help_text' => '',
+                ],
             ],
             'access_secret' => [
                 'type' => 'text',
@@ -36,8 +36,8 @@ return [
                 'validation' => null,
                 'value' => null,
                 'attributes' => [
-                    'help_text' => ''
-                ]
+                    'help_text' => '',
+                ],
             ],
             'associate_tag' => [
                 'type' => 'text',
@@ -46,8 +46,8 @@ return [
                 'validation' => null,
                 'value' => null,
                 'attributes' => [
-                    'help_text' => ''
-                ]
+                    'help_text' => '',
+                ],
             ],
             'region' => [
                 'type' => 'text',
@@ -56,10 +56,10 @@ return [
                 'validation' => null,
                 'value' => null,
                 'attributes' => [
-                    'help_text' => 'us-east-1,us-east-2,....'
-                ]
-            ]
-        ]
-    ]
+                    'help_text' => 'us-east-1,us-east-2,....',
+                ],
+            ],
+        ],
+    ],
 
 ];

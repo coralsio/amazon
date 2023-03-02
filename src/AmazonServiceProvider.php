@@ -29,7 +29,6 @@ class AmazonServiceProvider extends BasePackageServiceProvider
      *
      * @return void
      */
-
     public function bootPackage()
     {
         // Load view
@@ -48,7 +47,7 @@ class AmazonServiceProvider extends BasePackageServiceProvider
         \AmazonProduct::macro('reconfig', function (array $config) {
             $client = new Client();
 
-            $conf = (new Configuration)
+            $conf = (new Configuration())
                 ->setAccessKey($config['api_key'])
                 ->setSecretKey($config['api_secret_key'])
                 ->setRegion($config['region'])
@@ -78,20 +77,16 @@ class AmazonServiceProvider extends BasePackageServiceProvider
             $loader = AliasLoader::getInstance();
             $loader->alias('Amazon', Amazon::class);
             if (\Modules::isModuleActive('corals-marketplace')) {
-
                 $namespace = "Marketplace";
             } else {
                 $namespace = "Ecommerce";
-
             }
             $loader->alias('ImportBrand', 'Corals\\Modules\\' . $namespace . '\\Models\\Brand');
             $loader->alias('ImportCategory', 'Corals\\Modules\\' . $namespace . '\\Models\\Category');
             $loader->alias('ImportProduct', 'Corals\\Modules\\' . $namespace . '\\Models\\Product');
             $loader->alias('ImportSKU', 'Corals\\Modules\\' . $namespace . '\\Models\\SKU');
             $loader->alias('ImportTag', 'Corals\\Modules\\' . $namespace . '\\Models\\Tag');
-
         });
-
     }
 
     protected function registerCustomFieldsModels()
