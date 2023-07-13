@@ -52,7 +52,7 @@ https://affiliate-program.amazon.com
 
 We also recommend clicking the Download Key File button and storing this in a secure location, like a password manager as you cannot retrieve the Secret Key from an existing Access Key after you click Close. Make sure you have it otherwise you will need to de-activate an old key and create another new one.
 
-p>&nbsp;</p>
+<p>&nbsp;</p>
 <p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-5.jpg" alt=""></p>
 <p>&nbsp;</p>
 
