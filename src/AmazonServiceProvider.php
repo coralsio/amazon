@@ -38,7 +38,7 @@ class AmazonServiceProvider extends BasePackageServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'Amazon');
 
         // Load migrations
-//        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        //        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         $this->registerCustomFieldsModels();
         $this->registerCommand();
