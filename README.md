@@ -1,69 +1,102 @@
+# Corals Amazon
+Amazon Module is an addon for Laraship eCommerce that gives you the ability to import products from Amazon and sell them as affiliate products, you can filter products by keywords and categories with other importing options. the import will extract the following:
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+1.Product Attributes: title, description, price, Amazon URL, and ASIN
 
-# :package_description
+2.the reviews iframe
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![Tests](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This package can be used as to scaffold a framework agnostic package. Follow these steps to get started:
+3.Product Images
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+4.Brand
 
-## Support us
+5.Categories
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+6.Tags
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Amazon Module Manager is using Product Advertising API to connect to Amazon to pull the products from Amazon.
+
+p>&nbsp;</p>
+
+### How To Get Your Access Key ID & Secret Key
+Getting your Access Key ID and Secret Key pair is easy enough, but it involves a number of steps.
+
+<strong>1) Goto the Amazon Associates Program home page and login to your account. For the purposes of this tutorial, we assume you are already an approved Amazon affiliate.</strong>
+
+https://affiliate-program.amazon.com
+
+<strong>2) Click on the Product Advertising API link at the top of the page:</strong>
+
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-1.png" alt=""></p>
+
+
+<strong>3) Click the button to access/signup. Log in to your Amazon login or follow the prompts to create your Product Advertising API account.</strong>
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-2.png" alt=""></p>
+p>&nbsp;</p>
+
+<strong>4) If you get a prompt on the next screen, click on Continue to Security Credentials. DO NOT USE IAM USERS – Amazon’s Product Advertising API must use the parent keys, not user keys.</strong>
+
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-3.png" alt=""></p>
+p>&nbsp;</p>
+
+<strong>5) Expand the “Access Keys” section. This section contains all of your current access keys. You will likely need to make a new one (you can have 2 active key pairs per account). Feel free to use an existing one if you have the secret key already, otherwise click on the Create New Access Key button.</strong>
+
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-4.png" alt=""></p>
+p>&nbsp;</p>
+
+<strong>6) A dialog box will appear with your new Access Key and Secret Key. Copy these into the ThirstyAffiliates->Settings page under the Amazon Importer settings tab.</strong>
+
+We also recommend clicking the Download Key File button and storing this in a secure location, like a password manager as you cannot retrieve the Secret Key from an existing Access Key after you click Close. Make sure you have it otherwise you will need to de-activate an old key and create another new one.
+
+p>&nbsp;</p>
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/larave-product-advertising-api-5.jpg" alt=""></p>
+p>&nbsp;</p>
+
+Your keys should look something like this:
+
+- Access key ID example: AKIAIOSFODNN7EXAMPLE
+
+- Secret access key example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+p>&nbsp;</p>
+
+### How To Get Your Amazon Associate Tag
+The associate tag can be found under your amazon affiliate at the top right, as in the screenshot below
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/amazon-setting-associate-atgss.png" alt=""></p>
+p>&nbsp;</p>
+
+
+### Now You can enter all these details to Amazon Plugin settings.
+
+<p><img src="https://www.laraship.com/wp-content/uploads/2018/06/amazon-settings.png" alt=""></p>
+p>&nbsp;</p>
+
+
+### Setup Your Cron Job:
+Amazon Importer uses background processes extract imports to avoid any timeout memory issues, jobs will be queued and the importer process will import only one job at the time, to set up your importer scheduler you need to add the following command to your crontab
+
+```php
+php artisan  import:run
+```
+
+<p>&nbsp;</p>
+
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
-```
-
-## Usage
-
-```php
-$skeleton = new VendorName\Skeleton();
-echo $skeleton->echoPhrase('Hello, VendorName!');
+composer require corals/amazon
 ```
 
 ## Testing
 
 ```bash
-composer test
+vendor/bin/phpunit vendor/corals/amazon/tests 
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
